@@ -1,0 +1,151 @@
+﻿<script src="~/Assets/js/jquery.js"></script>
+<footer id="mt-footer" class="style1 wow fadeInUp" data-wow-delay="0.4s">
+    <!-- Footer Holder of the Page -->
+    <div class="footer-holder dark">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-3 mt-paddingbottomsm">
+                    <!-- F Widget About of the Page -->
+                    <div class="f-widget-about">
+                        <div class="logo">
+                            <a href="/admin/adminadmin"><img src="~/Assets/images/logo.png" alt="TBC"></a>
+                        </div>
+                        <p>TBC viết tắt của Tech Blind Club, hội người mù công nghệ. Hội này được thành lập để giúp đỡ nhau vượt qua đợt thực tập chông gai nhìn đâu cũng thấy tech(tạch) tech(tạch) tech(tạch).</p>
+                        <!-- Social Network of the Page -->
+                        <ul class="list-unstyled social-network">
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                            <li><a href="#"><i class="fa fa-youtube"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                            <li><a href="#"><i class="fa fa-whatsapp"></i></a></li>
+                        </ul>
+                        <!-- Social Network of the Page end -->
+                    </div>
+                    <!-- F Widget About of the Page end -->
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 mt-paddingbottomsm">
+                    <div class="f-widget-news">
+                        <h3 class="f-widget-heading">Mạng xã hội</h3>
+                        <div class="news-articles">
+                            <div class="news-column">
+                                <i class="fa fa-facebook fa-icon"></i>
+                                <div class="txt-box">
+                                    <p>Trang Facebook của <a href="#">TBC Shop</a> official<br><a href="#">https://facebook.com/TBCShop</a></p>
+                                </div>
+                            </div>
+                            <div class="news-column">
+                                <i class="fa fa-twitter"></i>
+                                <div class="txt-box">
+                                    <p>Trang Twitter của <a href="#">TBC Shop</a> official<br><a href="#">https://twitter.com/TBCShop</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 mt-paddingbottomxs">
+                    <!-- Footer Tabs of the Page -->
+                    <div class="f-widget-tabs">
+                        <h3 class="f-widget-heading">Sản phẩm</h3>
+                        <ul class="list-unstyled tabs">
+                            <li><a href="/product/list">Áo thun</a></li>
+                            <li><a href="/product/list">Quần ngắn</a></li>
+                            <li><a href="/product/list">Áo somi</a></li>
+                            <li><a href="/product/list">Quần dài</a></li>
+                        </ul>
+                    </div>
+                    <!-- Footer Tabs of the Page -->
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 text-right">
+                    <!-- F Widget About of the Page -->
+                    <div class="f-widget-about">
+                        <h3 class="f-widget-heading">Thông tin</h3>
+                        <ul class="list-unstyled address-list align-right">
+                            <li><i class="fa fa-map-marker"></i><address>Khu đô thị FPT, Ngũ Hành Sơn <br>Đà Nẵng</address></li>
+                            <li><i class="fa fa-phone"></i><a href="tel:123456789"> 0123 45 67 89</a></li>
+                            <li><i class="fa fa-envelope-o"></i><a href="mailto:admin@tbc.com">admin@tbc.com</a></li>
+                        </ul>
+                    </div>
+                    <!-- F Widget About of the Page end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Holder of the Page end -->
+    <!-- Footer Area of the Page -->
+    <div class="footer-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <p>© <a href="#">TBC</a> - All rights Reserved</p>
+                </div>
+                <div class="col-xs-12 col-sm-6 text-right">
+                    <div class="bank-card">
+                        <img src="~/Assets/images/bank-card.png" alt="bank-card">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer Area of the Page end -->
+</footer>
+<script>
+    function loadCart() {
+        $.ajax({
+            url: "/cart/listcart",
+            method: "GET",
+            contentType: "application/json; charset=utf-8",
+            data: null,
+            success: function (res) {
+                if (res.cart.length >= 1) {
+                    $("#num").html(res.cart.length);
+                    $("#cartdetail").empty();
+                    $("#cartdetail").append(res.result);
+                }
+                else{
+                    $("#num").html(res.length);
+                    $("#cartdetail").empty();
+                    $("#cartdetail").append("<p style=\"font-weight:600;color:red;font-size:16px\">Chưa có sản phẩm nào trong giỏ hàng</p>");
+                }
+            }
+        })
+    }
+    $(document).ready(function () {
+        loadCart();
+    })
+    function AddCart(pId, pCount) {
+        pCount = $("#pty_p").val();
+        pSize = $("#osize").val();
+        pColor = $("#ocolor").val();
+        isValid = 0;
+        if (pSize == 0 || pColor == 0) {
+            alert("Vui lòng chọn thông tin cho sản phẩm!");
+            isValid=1;
+        }
+        if (pCount < 1) {
+            alert("Số lượng mua không hợp lệ!");
+            isValid=1;
+        }
+        if (isValid == 0) {
+            $.ajax({
+                url: "/cart/addcart",
+                method: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ pid: pId, qty: pCount, cId: pColor, sId: pSize }),
+                dataType: "json",
+                success: function (res) {
+                    if (res.result == 0) {
+                        alert("Thêm giỏ hàng thất bại!");
+                    }
+                    else if (res.result == 4) {
+                        alert("Vui lòng đăng nhập trước khi thêm giỏ hàng!");
+                    }
+                    else {
+                        loadCart();
+                        alert("Thêm giỏ hàng thành công!");
+                    }
+                }
+            })
+        }
+    }
+</script>

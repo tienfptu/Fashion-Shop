@@ -1,0 +1,232 @@
+﻿@model IEnumerable<Fashion.ViewModel.CartViewModel>
+@{
+    ViewBag.Title = "ViewCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Assets/js/jquery.js"></script>
+@{
+    var cart = (Fashion.ViewModel.CartTotal)Session["CartPrint"];
+    var cartTotalF = string.Format("{0:#,0}", cart.Total);
+    var cartPayF = string.Format("{0:#,0}", cart.Payment);
+
+}
+<main id="mt-main">
+    <section class="mt-contact-banner mt-banner-22" style="background-image: url(/assets/images/img-76.jpg);">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 class="text-center">Giỏ hàng</h1>
+                    <!-- Breadcrumbs of the Page -->
+                    <nav class="breadcrumbs">
+                        <ul class="list-unstyled">
+                            <li><a href="/">Trang chủ <i class="fa fa-angle-right"></i></a></li>
+                            <li>Giỏ hàng</li>
+                        </ul>
+                    </nav>
+                    <!-- Breadcrumbs of the Page end -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Mt Process Section of the Page -->
+    <div class="mt-process-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul class="list-unstyled process-list">
+                        <li class="active">
+                            <span class="counter">01</span>
+                            <strong class="title">Giỏ hàng</strong>
+                        </li>
+                        <li>
+                            <span class="counter">02</span>
+                            <strong class="title">Thanh toán</strong>
+                        </li>
+                        <li>
+                            <span class="counter">03</span>
+                            <strong class="title">Thành công</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div><!-- Mt Process Section of the Page end -->
+    <!-- Mt Product Table of the Page -->
+    <div class="mt-product-table">
+        @if (Model == null)
+        {
+            <h3 style="text-align:center">Giỏ hàng đang trống. Vui lòng quay lại <a style="color:red" href="/">trang chủ</a> để mua hàng.</h3>
+        }
+        else
+        {
+            <div class="container">
+
+                <div class="row border">
+                    <div class="col-xs-12 col-sm-2">
+                        <strong class="title">HÌNH ẢNH</strong>
+                    </div>
+                    <div class="col-xs-12 col-sm-2">
+                        <strong class="title">TÊN SẢN PHẨM</strong>
+                    </div>
+                    <div class="col-xs-12 col-sm-2">
+                        <strong class="title">THÔNG TIN</strong>
+                    </div>
+                    <div class="col-xs-12 col-sm-2">
+                        <strong class="title">GIÁ</strong>
+                    </div>
+                    <div class="col-xs-12 col-sm-1">
+                        <strong class="title">SL</strong>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-2">
+                        <strong class="title">TỔNG CỘNG</strong>
+                    </div>
+                    <div class="col-xs-12 col-sm-1">
+                        <strong class="title">THAO TÁC</strong>
+                    </div>
+                </div>
+                @foreach (var item in Model)
+                {
+                    var totalF = string.Format("{0:#,0}", item.Price * item.Quantity);
+                    var priceF = string.Format("{0:#,0}", item.Price);
+                    <div class="row border">
+                        <div class="col-xs-12 col-sm-2">
+                            <div class="img-holder">
+                                <img src="@item.Image" alt="image description">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-2">
+                            <strong class="product-name">@item.Name</strong>
+                        </div>
+                        <div class="col-xs-12 col-sm-2">
+                            <strong class="product-name"><div>Kích cỡ : @item.SizeName</div><div>Màu sắc : @item.ColorName</div></strong>
+
+                        </div>
+                        <div class="col-xs-12 col-sm-2">
+                            <strong class="price"> @priceF VNĐ</strong>
+
+                        </div>
+                        <div class="col-xs-12 col-sm-1">
+                            <input type="number" min="1" max="3"  style="margin-top:70px;width:82%" id="count_@item.ProductID@item.SizeId@item.ColorId" value="@item.Quantity" required class="form-control" />
+
+                        </div>
+                        <div class="col-xs-12 col-sm-2">
+                            <strong class="price"> @totalF  VNĐ</strong>
+                            <a href="/cart/removeitem?pId=@item.ProductID&sId=@item.SizeId&cId=@item.ColorId"><i class="fa fa-close"></i></a>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-1">
+                            <strong class="price" style="cursor:pointer" onclick="update(@item.ProductID,@item.SizeId,@item.ColorId)" style="color:blue"> Cập nhật</strong>
+                        </div>
+                    </div>
+                }
+         <<button onclick="window.location.href='/cart/removeall';"
+        style="        margin-left: 1035px;
+        color: #494949;
+        margin-bottom: 20px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: 650">
+    Xóa tất cả giỏ hàng
+</button>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <form action="/cart/viewcart" class="coupon-form" method="post">
+                            <fieldset>
+                                <div class="mt-holder">
+                                    @if (ViewBag.Error != null)
+                                    {
+                                        <p style="font-size:16px;color:red;font-weight:600">@ViewBag.Error</p>
+                                    }
+                                    else if (ViewBag.Success != null)
+                                    {
+                                        <p style="font-size:16px;color:forestgreen;font-weight:600">@ViewBag.Success</p>
+                                    }
+                                    <input type="text" class="form-control" name="code" placeholder="Mã giảm giá">
+                                    <button type="submit">ÁP DỤNG</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div><!-- Mt Product Table of the Page end -->
+    <!-- Mt Detail Section of the Page -->
+    @if (Model != null)
+    {
+        <section class="mt-detail-sec style1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <h2>TỔNG GIỎ HÀNG</h2>
+                        <ul class="list-unstyled block cart">
+                            <li>
+                                <div class="txt-holder">
+                                    <strong class="title sub-title pull-left">Tổng hóa đơn</strong>
+                                    <div class="txt pull-right">
+                                        <span> @cartTotalF VNĐ</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="txt-holder">
+                                    <strong class="title sub-title pull-left">Mã giảm giá</strong>
+                                    <div class="txt pull-right">
+                                        @if (cart.Value == null)
+                                        {
+                                            <span>Không có</span>
+                                        }
+                                        else
+                                        {
+                                            <span> @cart.Value % </span>
+                                        }
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="txt-holder">
+                                    <strong class="title sub-title pull-left">Phí vận chuyển</strong>
+                                    <div class="txt pull-right">
+                                        <span>Miễn phí</span>
+                                    </div>
+                                </div>
+                            </li>
+                            <li style="border-bottom: none;">
+                                <div class="txt-holder">
+                                    <strong class="title sub-title pull-left">Thành tiền</strong>
+                                    <div class="txt pull-right">
+                                        <span>@cartPayF VNĐ</span>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                        <a href="/cart/checkout" class="process-btn">TIẾN HÀNH THANH TOÁN <i class="fa fa-check"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    }
+    <!-- Mt Detail Section of the Page end -->
+</main>
+<script>
+    function update(pId, sId, cId) {
+        var id = ""+ pId + sId + cId;
+        var _id = "count_" + id;
+        var count = $("#" + _id).val();
+        $.ajax({
+            url: "/cart/update?pId=" + pId + "&sId=" + sId + "&cId=" + cId +"&count=" +count,
+            method: "GET",
+            contentType: "application/json; charset=utf-8",
+            data: null,
+            dataType: "json",
+            success: function (res) {
+                if (res == true) {
+                    alert("Cập nhật thành công!");
+                    location.reload();
+                }
+            }
+            
+        })
+    }
+</script>

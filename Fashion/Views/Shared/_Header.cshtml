@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Fashion.Models.Category>
+<header id="mt-header" class="style4">
+    <!-- mt bottom bar start here -->
+    <div class="mt-bottom-bar">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- mt logo start here -->
+                    <div class="mt-logo"><a href="/"><img src="~/Assets/images/mt-logo.png" alt="schon"></a></div>
+                    <!-- mt icon list start here -->
+                    <ul class="mt-icon-list">
+                        <li class="hidden-lg hidden-md">
+                            <a href="#" class="bar-opener mobile-toggle">
+                                <span class="bar"></span>
+                                <span class="bar small"></span>
+                                <span class="bar"></span>
+                            </a>
+                        </li>
+                        <li><a href="#" class="icon-magnifier"></a></li>
+                        @{Html.RenderAction("_Cart", "Home");}
+                      
+                    </ul><!-- mt icon list end here -->
+                    <!-- navigation start here -->
+                    <nav id="nav">
+                        <ul>
+                            <li>
+                                <a href="/">Trang chủ <i class="fa fa-angle-down hidden-lg hidden-md" aria-hidden="true"></i></a>
+                            </li>
+                            <li>
+                                <a class="drop-link" href="/product/list">Danh sách sản phẩm <i class="fa fa-angle-down hidden-lg hidden-md" aria-hidden="true"></i></a>
+                                <div class="s-drop">
+                                    <ul>
+
+                                        @foreach (var item in Model)
+                                        {
+                                            <li><a href="/product/list?id=@item.ID">@item.Name</a></li>
+                                        }
+
+                                    </ul>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="/introduce/index">Giới thiệu <i class="fa fa-angle-down hidden-lg hidden-md" aria-hidden="true"></i></a>
+                            </li>
+
+                            @{ var username = (Fashion.Models.Customer)Session["CUS"];}
+
+                            @{
+                                if ((Fashion.Models.Customer)Session["CUS"] != null)
+                                {
+                                    <li>
+                                        <a class="drop-link" href="/login/index">@username.Username<i class="fa fa-angle-down hidden-lg hidden-md" aria-hidden="true"></i></a>
+                                        <div class="s-drop">
+                                            <ul>
+                                                <li><a href="/customer/index">Thông tin tài khoản</a></li>
+                                                <li><a href="/customer/listorder">Đơn hàng đã đặt</a></li>
+                                                <li><a href="/customer/logout">Đăng xuất</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+                            }
+
+                            @{
+                                if ((Fashion.Models.Customer)Session["CUS"] == null)
+                                {
+                                    <li>
+                                        <a href="#" class=" side-opener">TÀI KHOẢN</a>
+                                    </li>
+                                }
+                            }
+
+                        </ul>
+                    </nav>
+                    <!-- mt icon list end here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- mt bottom bar end here -->
+    <span class="mt-side-over"></span>
+</header>

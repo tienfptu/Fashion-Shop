@@ -1,0 +1,103 @@
+﻿@model Fashion.Models.Product
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/Admin/assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="~/Areas/Admin/assets/bower_components/ckeditor/ckeditor.js"></script>
+<section class="content">
+    <div class="box box-warning" style="margin-bottom:0px">
+        <div class="box-header with-border">
+            <h3 class="box-title">Thêm sản phẩm mới</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            @using (Html.BeginForm("Create", "ProductAdmin", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <label>Tiêu đề:</label>
+                    @Html.TextBoxFor(model => model.Name, htmlAttributes: new { @class = "form-control", @required = "true", @placeholder = "Nhập tên sản phẩm" })
+
+                </div>
+                <div class="form-group">
+                    <label>Mô tả ngắn:</label>
+                    @Html.TextBoxFor(model => model.Description, htmlAttributes: new { @class = "form-control", @required = "true", @placeholder = "Nhập mô tả ngắn về sản phẩm" })
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-sm-12">
+                        <div class="form-group">
+                            <label>Hình ảnh đại diện:</label>
+                            <button type="button" class="btn btn-xs btn-default" onclick="chooseImage()" style="margin-top:2px;margin-left:0px">Chọn ảnh</button>
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(model => model.Image, htmlAttributes: new { @style = "display:none" })
+                            <img class="img-responsive" style="width:100%;text-align:center;height:360px" id="Img2" src="~/Areas/Admin/assets/dist/img/no-image-available.jpg" alt="Ảnh đại diện" />
+                        </div>
+                    </div>
+                    <div class="col-md-8" style="margin-top:40px">
+                        <div class="form-group">
+                            <label for="Quiz">Danh mục sản phẩm:</label><br />
+                            @Html.DropDownListFor(model => model.CategoryId, (SelectList)ViewBag.ListCategory, "[Chọn danh mục cho sản phẩm]", new { @class = "form-control", @required = "true" })
+                        </div>
+                        <div class="form-group">
+                            <label for="Quiz">Giá nhập sản phẩm:</label><br />
+                            @Html.TextBoxFor(model => model.OriginalPrice, new { @class = "form-control", @required = "true", @type = "number" })
+                        </div>
+                        <div class="form-group">
+                            <label for="Quiz">Đơn giá sản phẩm:</label><br />
+                            @Html.TextBoxFor(model => model.Price, new { @class = "form-control", @required = "true", @type = "number" })
+                        </div>
+                        <div class="form-group">
+                            <label for="Quiz">Giá khuyến mại:</label><br />
+                            @Html.TextBoxFor(model => model.PromotionPrice, new { @class = "form-control", @required = "true", @type = "number" })
+                        </div>
+                        <div class="form-group" style="margin-bottom:0px">
+                            @Html.CheckBoxFor(model => model.Status) <span style="font-weight:600">Hiện sản phẩm</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Nội dung sản phẩm:</label>
+                    @Html.TextAreaFor(model => model.Content, new { @class = "form-control", @required = "true", @id = "editor1" })
+                    <script>
+                        if ($('#editor1').length > 0) {
+                            var editor = CKEDITOR.replace('editor1', {
+                                languague: 'vi'
+                            });
+
+                        }
+                    </script>
+                </div>
+                <div class="box-footer">
+
+                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+                    <a href="/Admin/ProductAdmin/List" class="btn btn-default">Quay lại</a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+<script>
+    function chooseImage() {
+        var finder = new CKFinder();
+        finder.selectActionFunction = function (fileUrl) {
+            $('#Image').attr('value', fileUrl);
+            $('#Img2').attr('src', fileUrl);
+        }
+        finder.popup();
+    }
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#avtpreview').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#Img2").change(function () {
+        readURL(this);
+    });
+</script>

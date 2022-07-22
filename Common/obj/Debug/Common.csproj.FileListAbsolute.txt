@@ -1,0 +1,17 @@
+C:\Users\PC\Desktop\PRJ\FS\Common\bin\Debug\Common.dll
+C:\Users\PC\Desktop\PRJ\FS\Common\bin\Debug\Common.pdb
+C:\Users\PC\Desktop\PRJ\FS\Common\obj\Debug\Common.csprojAssemblyReference.cache
+C:\Users\PC\Desktop\PRJ\FS\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+C:\Users\PC\Desktop\PRJ\FS\Common\obj\Debug\Common.dll
+C:\Users\PC\Desktop\PRJ\FS\Common\obj\Debug\Common.pdb
+C:\Users\minhu\Desktop\FS4\FS\Common\bin\Debug\Common.dll
+C:\Users\minhu\Desktop\FS4\FS\Common\bin\Debug\Common.pdb
+C:\Users\minhu\Desktop\FS4\FS\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+C:\Users\minhu\Desktop\FS4\FS\Common\obj\Debug\Common.dll
+C:\Users\minhu\Desktop\FS4\FS\Common\obj\Debug\Common.pdb
+D:\Savestock\Project\TEST\1_over\FS\Common\bin\Debug\Common.dll
+D:\Savestock\Project\TEST\1_over\FS\Common\bin\Debug\Common.pdb
+D:\Savestock\Project\TEST\1_over\FS\Common\obj\Debug\Common.csproj.AssemblyReference.cache
+D:\Savestock\Project\TEST\1_over\FS\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+D:\Savestock\Project\TEST\1_over\FS\Common\obj\Debug\Common.dll
+D:\Savestock\Project\TEST\1_over\FS\Common\obj\Debug\Common.pdb

@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Fashion.Models.Order>
+@{
+    ViewBag.Title = "ListOrder";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main id="mt-main">
+    <!-- Mt Contact Banner of the Page -->
+    <section class="mt-contact-banner style4" style="background-image: url(/Assets/images/img43.jpg);">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <h1>HAVE A GOOD DAY!</h1>
+                    <!-- Breadcrumbs of the Page -->
+                    <nav class="breadcrumbs">
+                        <ul class="list-unstyled">
+                            <li><a href="/">Trang chủ<i class="fa fa-angle-right"></i></a></li>
+                            <li>Danh sách đơn hàng</li>
+                        </ul>
+                    </nav><!-- Breadcrumbs of the Page end -->
+                </div>
+            </div>
+        </div>
+    </section><!-- Mt Contact Banner of the Page end -->
+    <div class="mt-product-table mt-padding-info" style="margin: 0px 10%">
+        <h2 style="text-align:center; margin-bottom:40px">DANH SÁCH ĐƠN ĐẶT HÀNG</h2>
+        <div class="row border">
+            <div class="col-xs-12 col-sm-1">
+                <strong class="title">MÃ ĐƠN</strong>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <strong class="title">THỜI GIAN ĐẶT HÀNG</strong>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <strong class="title">SỐ ĐIỆN THOẠI</strong>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <strong class="title">ĐỊA CHỈ NHẬN HÀNG</strong>
+            </div>
+            <div class="col-xs-12 col-sm-2" style="text-align:right">
+                <strong class="title">TỔNG TIỀN</strong>
+            </div>
+            <div class="col-xs-12 col-sm-2" style="text-align:right">
+                <strong class="title">TRẠNG THÁI</strong>
+            </div>
+        </div>
+        @foreach (var item in Model)
+        {
+            var totalF = string.Format("{0:#,0}", item.Total);
+            var idF = string.Format("{0:000000}", item.ID);
+        <div class="row border" style="margin-top:20px">
+            <div class="col-xs-12 col-sm-1">
+                <p>@idF</p>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <p>@item.CreatedDate.ToString("dd-MM-yyyy HH:mm:ss")</p>
+            </div>
+            <div class="col-xs-12 col-sm-2">
+                <p>@item.CustomerMobile</p>
+            </div>
+            <div class="col-xs-12 col-sm-3">
+                <p>@item.CustomerMessage</p>
+            </div>
+            <div class="col-xs-12 col-sm-2" style="text-align:right">
+                <p>@totalF VNĐ</p>
+            </div>
+            <div class="col-xs-12 col-sm-2" style="text-align:right">
+                @if (item.Status == 1)
+                {
+                    <p style="color:red;font-size:16px;font-weight:600">Chờ xác nhận</p>
+                }
+                else if (item.Status == 2)
+                {
+                    <p style="color:red;font-size:16px;font-weight:600">Đã xác nhận</p>
+
+                }
+                else if (item.Status == 3)
+                {
+                    <p style="color:red;font-size:16px;font-weight:600">Đang giao</p>
+
+                }
+                else if (item.Status == 4)
+                {
+                    <p style="color:red;font-size:16px;font-weight:600">Đã thanh toán</p>
+
+                }
+                else if (item.Status == 5)
+                {
+                    <p style="color:red;font-size:16px;font-weight:600">Đã hủy</p>
+
+                }
+            </div>
+        </div>
+        }
+
+    </div>
+</main>

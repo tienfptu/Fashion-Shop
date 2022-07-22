@@ -1,0 +1,202 @@
+﻿@model Fashion.Models.ProductOption
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+@{
+    var product = (Fashion.Models.Product)ViewBag.Product;
+    var options = (IEnumerable<Fashion.Models.ProductOption>)ViewBag.Option;
+    var priceOriF = string.Format("{0:#,0}", product.OriginalPrice);
+    var priceF = string.Format("{0:#,0}", product.Price);
+    var priceProF = string.Format("{0:#,0}", product.PromotionPrice);
+}
+@Html.Partial("_MessageAlert")
+<script src="~/Areas/Admin/Assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script>
+    $(function () {
+        $("#example1").DataTable({
+            "responsive": true,
+            "autoWidth": false,
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json'
+            },
+            "ordering": false
+        });
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true
+        });
+    });
+</script>
+<section class="content">
+    <div class="box box-warning" style="margin-bottom:0px">
+        <div class="box-header with-border">
+            <h3 class="box-title">Thông tin chi tiết sản phẩm</h3>
+            <a href="/admin/ProductAdmin/List" style="margin-right:10px;position:absolute;right:0" class="btn btn-default">Quay lại</a>
+        </div>
+        <div class="box-body">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Hình ảnh</th>
+                        <th>Giá nhập</th>
+                        <th>Đơn giá</th>
+                        <th>Giá khuyến mại</th>
+                        <th>Mã QR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+
+                        <td>@product.Name</td>
+                        <td>
+                            <img src="@product.Image" style="width:100px;height:120px" alt="Alternate Text" />
+                        </td>
+                        <td>@priceOriF</td>
+                        <td>@priceF</td>
+                        <td>@priceProF</td>
+                        <td>
+                            <img src="@product.QrCode" style="width:120px;height:120px" class="img" />
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Hình ảnh</th>
+                        <th>Giá nhập</th>
+                        <th>Đơn giá</th>
+                        <th>Giá khuyến mại</th>
+                        <th>Mã QR</th>
+                    </tr>
+                </tfoot>
+            </table>
+            
+        </div>
+        <h3 style="color:red;text-align:center">THÔNG TIN SẢN PHẨM</h3>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-6">
+                    @using (Html.BeginForm("Create", "ProductOptionAdmin", FormMethod.Post, new { @id = "formInfo" }))
+                    {
+                        <div class="form-group">
+                            <label>Màu sắc:</label>
+                            @Html.DropDownListFor(model => model.ColorId, (SelectList)ViewBag.ListColors, "[Chọn màu sắc]", htmlAttributes: new { @class = "form-control", @required = "true", @placeholder = "Nhập code" })
+                        </div>
+                        <div class="form-group">
+                            <label>Kích cỡ:</label>
+                            @Html.DropDownListFor(model => model.SizeId, (SelectList)ViewBag.ListSizes, "[Chọn kích cỡ]", htmlAttributes: new { @class = "form-control", @required = "true", @placeholder = "Nhập giá trị %", @type = "number" })
+                        </div>
+                        <div class="form-group">
+                            <label>Số lượng có:</label>
+                            @Html.TextBoxFor(model => model.Count, htmlAttributes: new { @class = "form-control", @required = "true", @placeholder = "Nhập số lượng sản phẩm" })
+                        </div>
+                        <div class="box-footer">
+                            <button type="submit" class="btn btn-primary">Lưu thông tin</button>
+                        </div>
+                        <input name="ProductId" value="@product.ID" style="display:none" />
+                        <input name="Id" id="Id" style="display:none" />
+                    }
+                </div>
+                <div class="col-md-6">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+
+                                <th>Kích cỡ sản phẩm</th>
+                                <th>Màu sắc sản phẩm</th>
+                                <th>Số lượng sản phẩm</th>
+                                <th style="width:20%">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in options)
+                            {
+                                <tr>
+
+                                    <td>@item.Size.Name</td>
+                                    <td>@item.Color.Name</td>
+                                    <td>@item.Count</td>
+                                    <td class="text-center">
+                                        <a onclick="deleteConfirm(this)" style="cursor:pointer" id="@item.Id" data-toggle="modal" data-target="#myModal"><i style="color:red" class="fa fa-fw fa-trash"></i></a>
+                                        <a onclick="loadUpdate(@item.Id)" style="cursor:pointer"><i style="color:green" class="fa fa-fw fa-pencil"></i></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+
+                                <th>Kích cỡ sản phẩm</th>
+                                <th>Màu sắc sản phẩm</th>
+                                <th>Số lượng sản phẩm</th>
+                                <th style="width:20%">Thao tác</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Bạn đang yêu cầu xóa dữ liệu</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                Bạn có thật sự muốn xóa dữ liệu này ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="deleteBtn" class="btn btn-danger" data-dismiss="modal">Xóa</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<script>
+    var idx;
+    var st;
+    var deleteConfirm = function (xthis) {
+        xid = xthis.id;
+    }
+    $('#deleteBtn').click(function () {
+        $.ajax({
+            type: "POST",
+            url: '/Admin/ProductOptionAdmin/delete',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ id: xid }),
+            dataType: "json",
+            success: function (res) {
+                location.reload();
+
+            }
+        });
+    })
+    function loadUpdate(id) {
+        $.ajax({
+            type: "get",
+            url: '/Admin/ProductOptionAdmin/update/' + id,
+            contentType: "application/json; charset=utf-8",
+            data: null,
+            dataType: "json",
+            success: function (res) {
+                $("#ColorId").val(res.ColorId);
+                $("#SizeId").val(res.SizeId);
+                $("#Count").val(res.Count);
+                $("#Id").val(res.Id);
+                $("#formInfo").attr("action","/Admin/ProductOptionAdmin/Update")
+            }
+        });
+    }
+</script>

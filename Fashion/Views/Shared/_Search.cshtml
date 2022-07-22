@@ -1,0 +1,12 @@
+﻿<div class="mt-search-popup">
+    <div class="mt-holder">
+        <a href="#" class="search-close"><span></span><span></span></a>
+        <div class="mt-frame">
+            @using (Html.BeginForm("Search", "Product", FormMethod.Get))
+            {
+                <input type="text" value="@ViewBag.keyWord" name="tukhoa" placeholder="Nhập từ khóa tìm kiếm">
+                <button type="submit">Tìm kiếm</button>
+            }
+        </div>
+    </div>
+</div>

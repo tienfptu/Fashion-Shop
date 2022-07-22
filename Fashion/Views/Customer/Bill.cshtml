@@ -1,0 +1,102 @@
+﻿@model Fashion.Models.Order
+
+@{
+    ViewBag.Title = "Bill";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var totalB = string.Format("{0:#,0}", Model.Total);
+    var idB = string.Format("{0:000000}", Model.ID);
+}
+
+<<main id="mt-main">
+    <!-- Mt Contact Banner of the Page -->
+    <section class="mt-contact-banner style4" style="background-image: url(/Assets/images/img43.jpg);">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <h1>HAVE A GOOD DAY!</h1>
+                    <!-- Breadcrumbs of the Page -->
+                    <nav class="breadcrumbs">
+                        <ul class="list-unstyled">
+                            <li><a href="/">Trang chủ<i class="fa fa-angle-right"></i></a></li>
+                            <li>Hóa đơn</li>
+                        </ul>
+                    </nav><!-- Breadcrumbs of the Page end -->
+                </div>
+            </div>
+        </div>
+    </section><!-- Mt Contact Banner of the Page end -->
+    <section class="mt-product-table mt-padding-info" style="margin:0px 20%">
+        <h2 style="text-align:center; margin-bottom:0px">HÓA ĐƠN CỦA BẠN</h2>
+
+        <div class="mt-detail-sec " >
+            <div class="container">
+                <div class="row" style="margin-right:50px; padding: 0px 10% 0px 5%">
+                    <div>
+                        <div class="holder">
+                            <ul class="list-unstyled block">
+                                <li>
+                                    <div class="txt-holder">
+                                        <strong class="title sub-title pull-left">MÃ ĐƠN HÀNG</strong>
+                                        <div class="txt pull-right">
+                                            <span>@idB </span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="txt-holder">
+                                        <strong class="title sub-title pull-left">THỜI GIAN ĐẶT</strong>
+                                        <div class="txt pull-right">
+                                            <span>@Model.CreatedDate.ToString("dd-MM-yyyy HH:mm:ss") </span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="txt-holder">
+                                        <strong class="title sub-title pull-left">HỌ VÀ TÊN</strong>
+                                        <div class="txt pull-right">
+                                            <span> @Model.CustomerName</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="txt-holder">
+                                        <strong class="title sub-title pull-left">SỐ ĐIỆN THOẠI</strong>
+                                        <div class="txt pull-right">
+                                            <span> @Model.CustomerMobile</span>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="txt-holder">
+                                        <strong class="title sub-title pull-left">ĐỊA CHỈ</strong>
+                                        <div class="txt pull-right">
+                                            <span> @Model.CustomerMessage</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="txt-holder">
+                                        <strong class="title sub-title pull-left">VẬN CHUYỂN</strong>
+                                        <div class="txt pull-right">
+                                            <span>Miễn phí vận chuyển</span>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li style="border-bottom: none;">
+                                    <div class="txt-holder">
+                                        <strong class="title sub-title pull-left">TỔNG THANH TOÁN</strong>
+                                        <div class="txt pull-right">
+                                            <span>  @totalB VNĐ</span>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+

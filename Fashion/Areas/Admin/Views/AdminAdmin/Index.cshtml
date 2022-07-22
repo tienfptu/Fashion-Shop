@@ -1,0 +1,127 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Areas/Admin/Assets/bower_components/jquery/dist/jquery.min.js"></script>
+
+<section class="content-header">
+    <h1>
+        Trang thống kê TBC Shop
+        <small>Chúc bạn một ngày tốt lành</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li class="active">Thống kê</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3>@ViewBag.TotalOrder</h3>
+
+                    <p>Đơn hàng</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-bag"></i>
+                </div>
+                <a href="/admin/orderadmin/index" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>@ViewBag.TotalCus</h3>
+
+                    <p>Khách hàng</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-stats-bars"></i>
+                </div>
+                <a href="/admin/customeradmin/list" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>@ViewBag.TotalUser</h3>
+
+                    <p>Người dùng</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+                <a href="/admin/useradmin/list" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>@ViewBag.TotalPro</h3>
+
+                    <p>Sản phẩm</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-pie-graph"></i>
+                </div>
+                <a href="/admin/productadmin/list" class="small-box-footer">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+    <div class="box box-success">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title" style="margin-left:50px">Biểu đồ doanh số</h4>
+                <a style="margin-left: 20px;" id="btn-filter" class="btn btn-warning">Lọc</a>
+                <input type="date" style="display:inline;width:200px" value="2021-07-30" class="form-control" name="start" id="_start" />
+                <input type="date" style="display: inline;width:200px" value="2021-08-20" class="form-control" name="end" id="_end" />
+            </div>
+            <div class="card-body">
+                <div id="myfirstchart" style="height: 450px;"></div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
+</section>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+<script>
+    $(document).ready(function () {
+        var chart = Morris.Bar({
+            element: 'myfirstchart',
+            data: [],
+            xkey: 'Time',
+            ykeys: ['Time', '_Order', 'Sales', 'Quantity'],
+            labels: ['Năm', 'Vốn', 'Bán ra', 'Số lượng sản phẩm bán ra']
+        });
+        $('#btn-filter').on('click', function () {
+            var start = $('#_start').val();
+            var end = $('#_end').val();
+            $.ajax({
+                type: "POST",
+                url: "/admin/adminadmin/filter",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify({ End: end, Start: start }),
+                dataType: "json",
+                success: function (res) {
+                    console.log(res);
+                    chart.setData(res);
+                }
+            });
+        })
+    })
+</script>

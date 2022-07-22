@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Fashion.Models.QuenMK
+
+<div id="wrapper">
+
+    <div class="w1">
+
+
+        <main id="mt-main">
+            <section class="mt-contact-banner mt-banner-22" style="background-image: url(/assets/images/img-76.jpg);">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h1 class="text-center">QUÊN MẬT KHẨU</h1>
+                            <!-- Breadcrumbs of the Page -->
+                            <nav class="breadcrumbs">
+                                <ul class="list-unstyled">
+                                    <li><a href="#">Trang chủ <i class="fa fa-angle-right"></i></a></li>
+                                    <li>Quên mật khẩu</li>
+                                </ul>
+                            </nav>
+                            <!-- Breadcrumbs of the Page end -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="mt-padding-info">
+                <div class="mt-side-widget ">
+                    <header>
+                        <span class="mt-side-subtitle">QUÊN MẬT KHẨU</span>
+                        <p>Điền tên tài khoản để nhận mật khẩu mới</p>
+                    </header>
+                    @using (Html.BeginForm("Index", "QuenMK", FormMethod.Post))
+                    {
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        <fieldset>
+                            @Html.TextBoxFor(model => model.username, new { @placeholder = "Tài khoản", @class = "input" })
+
+                            <div class="box">
+                                <button type="submit" class="btn-type1">Xác nhận</button>
+
+                            </div>
+                        </fieldset>
+
+                    }
+                </div>
+            </div>
+
+        </main>
+
+    </div>
+    <span id="back-top" class="fa fa-arrow-up"></span>
+</div>
+

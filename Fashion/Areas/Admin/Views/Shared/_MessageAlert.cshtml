@@ -1,0 +1,8 @@
+﻿
+@if (Fashion.Library.Notification.has_flash())
+{
+    Fashion.Library.ModelNotification Notifi = Fashion.Library.Notification.get_flash();
+    <input type="hidden" value="@Notifi.mgs_type" name="mgs_type" />
+    <input type="hidden" value=" @Notifi.mgs" name="mgs" />
+}
+

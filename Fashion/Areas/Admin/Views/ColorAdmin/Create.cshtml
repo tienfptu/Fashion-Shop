@@ -1,0 +1,29 @@
+﻿@model Fashion.Models.Color
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="box box-warning" style="margin-bottom:0px">
+        <div class="box-header with-border">
+            <h3 class="box-title">Thêm màu mới</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            @using (Html.BeginForm("Create", "ColorAdmin", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <label>Màu của sản phẩm:</label>
+                    @Html.TextBoxFor(model => model.Name, htmlAttributes: new { @class = "form-control", @required = "true", @placeholder = "Nhập tên màu" })
+
+                </div>
+                <div class="box-footer">
+
+                    <button type="submit" class="btn btn-primary">Thêm mới</button>
+                    <a href="/Admin/ColorAdmin/List" class="btn btn-default">Quay lại</a>
+                </div>
+            }
+        </div>
+    </div>
+</section>

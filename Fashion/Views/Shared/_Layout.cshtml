@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TBC SHOP</title>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,200italic,300,300italic,400italic,600,600italic,700,700italic,900,900italic%7cMontserrat:400,700%7cOxygen:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="~/Assets/css/bootstrap.css">
+    <link rel="stylesheet" href="~/Assets/css/bootstrap.css">
+
+    <link rel="stylesheet" href="~/Assets/css/animate.css">
+    <link rel="stylesheet" href="~/Assets/css/icon-fonts.css">
+    <link rel="stylesheet" href="~/Assets/css/main.css">
+    <link rel="stylesheet" href="~/Assets/css/responsive.css">
+</head>
+<body>
+    <div id="wrapper">
+        <div id="pre-loader" class="loader-container">
+            <div class="loader">
+                <img src="~/Assets/images/svg/rings.svg" alt="loader">
+            </div>
+        </div>
+        <div class="w1">
+            @{Html.RenderAction("_Header", "Home"); }
+            @{
+                if ((Fashion.Models.Customer)Session["CUS"] == null)
+                {
+                    <div class="mt-side-menu">
+                        <!-- mt holder start here -->
+                        <div class="mt-holder">
+                            <a href="#" class="side-close"><span></span><span></span></a>
+                            <strong class="mt-side-title">TÀI KHOẢN CỦA TÔI</strong>
+                            <!-- mt side widget start here -->
+                            <div class="mt-side-widget">
+                                <header>
+                                    <span class="mt-side-subtitle">ĐĂNG NHẬP</span>
+                                    <p>Chào mừng trở lại! Đăng nhập vào tài khoản của bạn</p>
+                                </header>
+                                <form onsubmit="login()" method="post">
+                                    <fieldset>
+                                        <input type="text" name="Username" required placeholder="Tên đăng nhập hoặc tài khoản email" class="input">
+                                        <input type="password" name="Password" required placeholder="Mật khẩu" class="input">
+                                        <div class="box">
+                                            <button type="submit" class="btn-type1">Đăng nhập</button>
+                                            <a href="/QuenMK/Index" class="help">Quên Mật khẩu</a>
+                                        </div>
+                                        
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <!-- mt side widget end here -->
+                            <div class="or-divider"><span class="txt">HOẶC</span></div>
+                            <!-- mt side widget start here -->
+                            <div class="mt-side-widget">
+                                <header>
+                                    <span class="mt-side-subtitle">ĐĂNG KÝ TÀI KHOẢN MỚI</span>
+                                    <p>Nhận nhiều ưu đãi hơn</p>
+                                </header>
+                                <form onsubmit="register()" method="post">
+                                    <fieldset>
+                                        <input type="text" name="_Username" placeholder="Tên đăng nhập hoặc tài khoản email" required class="input">
+                                        <input type="email" name="_Email" placeholder="Email liên hệ mua hàng" class="input" required>
+                                        <input type="text" name="_Name" placeholder="Tên khách hàng" class="input" required>
+                                        <input type="text" name="_Phone" placeholder="Số điện thoại" class="input" required>
+                                        <input type="text" name="_Address" placeholder="Địa chỉ nhận hàng" class="input">
+                                        <input type="password" name="_Password" placeholder="Mật khẩu" class="input" required>
+                                        <input type="password" name="_RePass" placeholder="Nhập lại mật khẩu" class="input" required>
+                                        <button type="submit" class="btn-type1">Đăng kí</button>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <!-- mt side widget end here -->
+                        </div>
+                        <!-- mt holder end here -->
+                    </div>
+                    <script>
+                        function login() {
+                            var username = $("input[name=Username]").val();
+                            var password = $("input[name=Password]").val();
+                            $.ajax({
+                                method: "POST",
+                                url: "/customer/login",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({
+                                    Username: username,
+                                    Password: password,
+                                }),
+                                success: function (rs) {
+
+                                    if (rs == 1) {
+                                        window.location.href = "/";
+                                    }
+                                    if (rs == 0) {
+
+                                        alert("Tài khoản hoặc mật khẩu không đúng");
+
+                                    }
+
+                                }
+                            });
+                        }
+
+                        function register() {
+
+                            var username = $("input[name=_Username]").val();
+                            var email = $("input[name=_Email]").val();
+                            var password = $("input[name=_Password]").val();
+                            var repass = $("input[name=_RePass]").val();
+                            var name = $("input[name=_Name]").val();
+                            var phone = $("input[name=_Phone]").val();
+                            var address = $("input[name=_Address]").val();
+                            $.ajax({
+                                method: "POST",
+                                url: "/customer/register",
+                                contentType: "application/json; charset=utf-8",
+                                data: JSON.stringify({
+                                    Username: username,
+                                    Email: email,
+                                    Password: password,
+                                    RePass: repass,
+                                    Name: name,
+                                    Phone: phone,
+                                    Address: address
+                                }),
+                                success: function (res) {
+                                    if (res == 1) {
+                                        alert("Bạn đã đăng ký thành công!");
+                                        window.location.href = "/";
+
+
+                                    }
+                                    if (res == 0) {
+                                        alert("Tài khoản đã tồn tại");
+
+
+
+                                    }
+                                    if (res == 2) {
+                                        alert("Email đã tồn tại");
+
+
+                                    }
+                                    if (res == 3) {
+                                        alert("Số điện thoại đã tồn tại");
+
+
+                                    }
+                                    if (res == 4) {
+                                        alert("Mật khẩu mới không khớp");
+
+
+                                    }
+                                }
+                            });
+                        }
+                    </script>
+                }
+            }
+            @Html.Partial("_Search")
+            @RenderBody()
+            @Html.Partial("_Footer")
+        </div>
+        <span id="back-top" class="fa fa-arrow-up"></span>
+    </div>
+    <script src="~/Assets/js/jquery.js"></script>
+    <script src="~/Assets/js/plugins.js"></script>
+    <script src="~/Assets/js/jquery.main.js"></script>
+</body>
+
+</html>

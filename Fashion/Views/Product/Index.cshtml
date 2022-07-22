@@ -1,0 +1,258 @@
+﻿@model Fashion.Models.Product
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var price = string.Format("{0:#,0}", Model.Price);
+    var pricePro = string.Format("{0:#,0}", Model.PromotionPrice);
+}
+<script src="~/Assets/js/jquery.js"></script>
+<main id="mt-main">
+    <section class="mt-product-detial wow fadeInUp" data-wow-delay="0.4s">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+          
+                    <div class="slider">
+                        <div class="product-slider">
+                            <div class="slide">
+                                <img style="width:64%;margin:60px auto" src="@Model.Image" alt="image descrption">
+                            </div>
+                            <div class="slide">
+                                <img style="width:64%;margin:60px auto" src="@Model.Image" alt="image descrption">
+                            </div>
+                            <div class="slide">
+                                <img style="width:64%;margin:60px auto" src="@Model.Image" alt="image descrption">
+                            </div>
+                            <div class="slide">
+                                <img style="width:64%;margin:60px auto" src="@Model.Image" alt="image descrption">
+                            </div>
+                            <div class="slide">
+                                <img style="width:64%;margin:60px auto" src="@Model.Image" alt="image descrption">
+                            </div>
+                        </div>
+                        <ul class="list-unstyled slick-slider pagg-slider">
+                            <li><div class="img"><img src="@Model.Image" alt="image description"></div></li>
+                            <li><div class="img"><img src="@Model.Image" alt="image description"></div></li>
+                            <li><div class="img"><img src="@Model.Image" alt="image description"></div></li>
+                            <li><div class="img"><img src="@Model.Image" alt="image description"></div></li>
+                            <li><div class="img"><img src="@Model.Image" alt="image description"></div></li>
+                        </ul>
+                    </div>
+                    <div class="detial-holder" style="padding:0px;padding-top:30px">
+                        <ul class="list-unstyled breadcrumbs">
+                            <li><a href="/">Trang chủ <i class="fa fa-angle-right"></i></a></li>
+                            <li>@Model.Name</li>
+                        </ul>
+                        <h2>@Model.Name</h2>
+                        <div class="rank-rating" style="margin:0px">
+                            <div class="txt-wrap" style="margin:0px;border-style:none;border-color:none;padding-bottom:16px">
+                                <a target="_blank" href="~/Assets/images/size.jpg">(Hướng dẫn chọn size)</a>
+                            </div>
+                            <div class="form-group">
+                                <label>Chọn kích cỡ sản phẩm</label>
+                                <select onclick="changeOption()" id="osize" class="form-control">
+                                    <option value="0">[Kích cỡ]</option>
+                                    @foreach (var item in (List<Fashion.Models.Size>)ViewBag.ListSizes)
+                                    {
+                                        <option value="@item.ID">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Chọn màu sắc sản phẩm</label>
+                                <select onclick="changeOption()" id="ocolor" class="form-control">
+                                    <option value="0">[Màu sắc]</option>
+                                    @foreach (var item in (List<Fashion.Models.Color>)ViewBag.ListColors)
+                                    {
+                                        <option value="@item.ID">@item.Name</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="text-holder" style="margin:0px;margin-bottom:6px">
+                            Số lượng :
+                            <span class="price" id="totalOption"></span>
+                        </div>
+                        <div class="text-holder" style="margin:0px">
+                            Đơn giá :
+                            @if (Model.ActivePromotion == true)
+                            {
+                                <span class="price">@pricePro VNĐ<del>@price VNĐ</del></span>
+                            }
+                            else
+                            {
+                                <span class="price">@price</span>
+                            }
+
+                        </div>
+                        <!-- Rank Rating of the Page end -->
+                        <div class="txt-wrap" style="margin:0px;border-style:none;border-color:none">
+                            <p style="margin:10px 0px">@Model.Description.</p>
+                        </div>
+                        <!-- Rank Rating of the Page-->
+                        <div class="txt-wrap" style="margin:0px;border-style:none;border-color:none">
+                            <div>
+                                <img src="@Model.QrCode" style="width:160px;margin-bottom:10px" alt="Qr code info product" />
+                            </div>
+                            <div>
+                                <h5>(Quét mã QR Code này đễ dễ dàng hiển thị thông tin sản phẩm bằng điện thoại)</h5>
+                            </div>
+                        </div>
+                        <div class="text-holder" style="margin:0px;margin-bottom:6px">
+                            Số lượng muốn mua:
+                            <input type="number" min="1" max="3" class="form-control" value="1" id="pty_p" placeholder="Nhập số lượng" required />
+                        </div>
+                        <form class="product-form">
+                            <fieldset>
+                                <div class="row-val">
+                                    @{
+                                        if ((Fashion.Models.Customer)Session["CUS"] != null)
+                                        {
+                                            <button type="button" id="_btna" onclick="AddCart(@Model.ID,0)">THÊM VÀO GIỎ</button>
+                                        }
+                                        else
+                                        {
+                                            <p style="font-weight:600;font-size:14px;color:red">Vui lòng đăng nhập để có thể thêm sản phẩm vào giỏ hàng</p>
+                                        }
+                                    }
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!-- Mt Product Detial of the Page end -->
+    <div class="product-detail-tab wow fadeInUp" data-wow-delay="0.4s">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <ul class="mt-tabs text-center text-uppercase">
+                        <li><a href="#tab1" class="active">CHI TIẾT</a></li>
+                        <li><a href="#tab2">NHẬN XÉT</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab1">
+                            <p>@Html.Raw(Model.Content)</p>
+                        </div>
+                        <div id="tab2">
+                            <div class="product-comment">
+                                @foreach (var item in (List<Fashion.ViewModel.CommentViewModel>)ViewBag.ListComments)
+                                {
+                                    <div class="mt-box">
+                                        <div class="mt-hold">
+                                            <span class="name">@item.Name</span>
+                                            <time datetime="2016-01-01">@item.CreatedDate.ToString("dd-MM-yyyy HH:mm:ss")</time>
+                                        </div>
+                                        <p>@item.Content</p>
+                                    </div>
+                                }
+
+                                @{
+                                    var user = (Fashion.Models.Customer)Session["CUS"];
+                                    if (user != null)
+                                    {
+                                        <form action="/comment/create" method="post">
+                                            <fieldset>
+                                                <h2>Thêm nhận xét</h2>
+                                                <input type="text" name="ProductId" value="@Model.ID" style="display:none;"/>
+                                                <div class="mt-row">
+                                                    <label>Tên</label>
+                                                    <input type="text" value="@user.Name" readonly required class="form-control">
+                                                </div>
+                                                <div class="mt-row">
+                                                    <label>Nhận xét</label>
+                                                    <textarea name="Content" required class="form-control"></textarea>
+                                                </div>
+                                                <button type="submit" class="btn-type4">THÊM NHẬN XÉT</button>
+                                            </fieldset>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        <p style="font-weight:600;font-size:14px;color:red">Vui lòng đăng nhập để có thể đánh giá sản phẩm</p>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- related products start here -->
+    <div class="related-products wow fadeInUp" data-wow-delay="0.4s">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h2>SẢN PHẨM LIÊN QUAN</h2>
+                    <div class="row">
+                        <div class="col-xs-12">
+
+                            @foreach (var item in (List<Fashion.Models.Product>)ViewBag.ListProducts)
+                            {
+                                var pprice = string.Format("{0:#,0}", item.Price);
+                                var ppricePro = string.Format("{0:#,0}", item.PromotionPrice);
+                                <div class="mt-product1 mt-paddingbottom20">
+                                    <div class="box">
+                                        <div class="b1">
+                                            <div class="b2">
+                                                <a href="\san-pham-@item.Alias-@item.ID"><img src="@item.Image" alt="image description"></a>
+                                                <ul class="links">
+                                                    <li><a href="san-pham-@item.Alias-@item.ID"><i class="icon-handbag"></i><span>Thêm giỏ</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="txt" style="text-align:center; padding:0px;">
+                                        <strong class="title"><a href="\san-pham-@item.Alias-@item.ID">@item.Name</a></strong>
+                                        @if (item.ActivePromotion == true)
+                                        {
+                                            <div style="display:flex;justify-content:space-around">
+                                                <del class="off">@pprice VNĐ</del>
+                                                <span class="price">@ppricePro VNĐ</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <span class="price">@pprice VNĐ</span>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- related products end here -->
+    </div>
+</main>
+<script>
+    function changeOption() {
+        let _pId = @Model.ID;
+        let _cId = $("#ocolor").val();
+        let _sId = $("#osize").val();
+        $.ajax({
+            type: "POST",
+            url: '/product/count',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify({ pId: _pId, cId: _cId, sId: _sId }),
+            dataType: "json",
+            success: function (res) {
+                if (res >= 1) {
+                    $("#totalOption").html("Có " + res + " sản phẩm");
+                    $("#_btna").html("Thêm vào giỏ");
+                    $("#_btna").removeAttr("disabled");
+                }
+                else {
+                    $("#totalOption").html("Có " + res + " sản phẩm");
+                    $("#_btna").html("Hết hàng");
+                    $("#_btna").attr("disabled", true);
+                }
+            }
+        })
+    }
+    $(function () {
+        changeOption();
+    });
+</script>

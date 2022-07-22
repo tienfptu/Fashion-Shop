@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = "Success";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main id="mt-main">
+    <section class="mt-contact-banner mt-banner-22" style="background-image: url(/assets/images/img-76.jpg);">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h1 class="text-center">THANH TOÁN</h1>
+                    <!-- Breadcrumbs of the Page -->
+                    <nav class="breadcrumbs">
+                        <ul class="list-unstyled">
+                            <li><a href="/">Trang chủ <i class="fa fa-angle-right"></i></a></li>
+                            <li>Thanh toán</li>
+                        </ul>
+                    </nav>
+                    <!-- Breadcrumbs of the Page end -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Mt Process Section of the Page -->
+    <div class="mt-process-sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- Process List of the Page -->
+                    <ul class="list-unstyled process-list">
+                        <li>
+                            <span class="counter">01</span>
+                            <strong class="title">Giỏ hàng</strong>
+                        </li>
+                        <li>
+                            <span class="counter">02</span>
+                            <strong class="title">Thanh toán</strong>
+                        </li>
+                        <li class="active">
+                            <span class="counter">03</span>
+                            <strong class="title">Thành công</strong>
+                        </li>
+                    </ul>
+                    <!-- Process List of the Page end -->
+                </div>
+            </div>
+            <div class="container">
+                <h1>Đặt hàng thành công, nhân viên sẽ sớm liên lạc xác nhận đơn hàng của bạn <i class="fa fa-check"></i></h1>
+            </div>
+
+
+            <button onclick="window.location.href='/customer/listorder';"
+                    style="
+        margin-top:20px;
+        margin-left: 1035px;
+        color: #494949;
+        margin-bottom: 20px;
+        font-size: 18px;
+        cursor: pointer;
+        font-weight: 650">
+                Đơn hàng đã đặt
+            </button>
+
+            <div style="margin:0px 37%">
+                <img src="@ViewBag.imgBarCode" style="height: 300px; width: 300px;" alt="Qr code info bill" />
+                <p style="padding-left:5px">Quét mã QRCode để hiển thị thông tin hóa đơn!</p>
+            </div>
+            
+
+
+        </div><!-- Mt Process Section of the Page end -->
+</main>

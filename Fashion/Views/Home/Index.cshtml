@@ -1,0 +1,294 @@
+﻿@model Fashion.ViewModel.ProductViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+@Html.Partial("_Slide")
+<main id="mt-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="mt-producttabs wow fadeInUp" data-wow-delay="0.4s">
+                    <!-- producttabs start here -->
+                    <ul class="producttabs" style="margin-bottom:16px">
+                        <li><a href="#tab1" class="active">Mới ra mắt</a></li>
+                        <li><a href="#tab2">Nổi bật</a></li>
+                    </ul>
+                    <!-- producttabs end here -->
+                    <div class="tab-content text-center">
+                        <div id="tab1">
+                            <!-- tabs slider start here -->
+                            <div class="tabs-slider">
+                                <!-- slide start here -->
+                                @{
+                                    for (int i = 1; i <= Model.ProductNews.Count() / 2; i++)
+                                    {
+                                        var list = Model.ProductNews.Skip((i - 1) * 2).Take(2);
+                                        <div class="slide">
+                                            @foreach (var item in list)
+                                            {
+                                                var price = string.Format("{0:#,0}", item.Price);
+                                                var pricePro = string.Format("{0:#,0}", item.PromotionPrice);
+                                                <div class="mt-product1 mt-paddingbottom20">
+                                                    <div class="box">
+                                                        <div class="b1">
+                                                            <div class="b2">
+                                                                <a href="/san-pham-@item.Alias-@item.ID"><img src="@item.Image" style="width:240px;height:300px" alt="image description"></a>
+                                                       
+                                                                <ul class="links">
+                                                                    <li><a href="san-pham-@item.Alias-@item.ID"><i class="icon-handbag"></i><span>Thêm giỏ hàng</span></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="txt">
+                                                        <strong class="title"><a href="/san-pham-@item.Alias-@item.ID">@item.Name</a></strong>
+                                                        @if (item.ActivePromotion == true)
+                                                        {
+                                                            <div style="display:flex;justify-content:space-evenly">
+                                                                <del class="off">@price VNĐ</del>
+                                                                <span class="price">@pricePro VNĐ</span>
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="price">@price VNĐ</span>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <!-- tabs slider end here -->
+                        </div>
+                        <div id="tab2">
+                            <!-- tabs slider start here -->
+                            <div class="tabs-slider">
+                                <!-- slide start here -->
+                                @{
+                                    for (int i = 1; i <= Model.ProductHots.Count() / 2; i++)
+                                    {
+                                        var list = Model.ProductHots.Skip((i - 1) * 2).Take(2);
+                                        <div class="slide">
+                                            @foreach (var item in list)
+                                            {
+                                                var price = string.Format("{0:#,0}", item.Price);
+                                                var pricePro = string.Format("{0:#,0}", item.PromotionPrice);
+                                                <div class="mt-product1 mt-paddingbottom20">
+                                                    <div class="box">
+                                                        <div class="b1">
+                                                            <div class="b2">
+                                                                <a href="/san-pham-@item.Alias-@item.ID"><img src="@item.Image" alt="image description"></a>
+                                                   
+                                                                <ul class="links">
+                                                                    <li><a href="/san-pham-@item.Alias-@item.ID"><i class="icon-handbag"></i><span>Thêm giỏ hàng</span></a></li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="txt">
+                                                        <strong class="title"><a href="san-pham-@item.Alias-@item.ID">@item.Name</a></strong>
+                                                        @if (item.ActivePromotion == true)
+                                                        {
+                                                        <div style="display:flex;justify-content:space-evenly">
+                                                            <del  class="off">@price VNĐ</del>
+                                                            <span  class="price">@pricePro VNĐ</span>
+                                                        </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="price">@price VNĐ</span>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                }                               
+                            </div>
+                            <!-- tabs slider end here -->
+                        </div>
+                   
+                    </div>
+                </div>
+                <!-- mt producttabs end here -->
+            </div>
+        </div>
+    </div>
+    <!-- mt bestseller start here -->
+    <div class="mt-bestseller bg-grey text-center wow fadeInUp" data-wow-delay="0.4s">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 mt-heading text-uppercase">
+                    <h2 class="heading">SIÊU KHUYẾN MÃI</h2>
+                    <p>Nhanh tay mua sắm!</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="bestseller-slider">
+                        @foreach (var item in Model.ProductPromotions.Take(8))
+                        {
+                            var price = string.Format("{0:#,0}", item.Price);
+                            var pricePro = string.Format("{0:#,0}", item.PromotionPrice);
+                            <div class="slide">
+                                <div class="mt-product1 large">
+                                    <div class="box">
+                                        <div class="b1">
+                                            <div class="b2">
+                                                <a href="/san-pham-@item.Alias-@item.ID"><img src="@item.Image" alt="image description"></a>
+               
+                                                <ul class="links add">
+                                                    <li><a href="san-pham-@item.Alias-@item.ID"><i class="icon-handbag"></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="txt">
+                                        <strong class="title"><a href="/san-pham-@item.Alias-@item.ID">@item.Name</a></strong>
+                                        @if (item.ActivePromotion == true)
+                                        {
+                                            <div style="display:flex;justify-content:space-evenly">
+                                                <del class="off">@price VNĐ</del>
+                                                <span class="price">@pricePro VNĐ</span>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <span class="price">@price VNĐ</span>
+                                        }
+                                    </div>
+                                </div><!-- mt product1 center end here -->
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- mt bestseller start here -->
+    <div class="mt-smallproducts">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-3 mt-paddingbottomsm wow fadeInLeft" data-wow-delay="0.4s">
+                    <h3 class="heading">Giá cao nhất</h3>
+                    @foreach (var item in Model.ProductPriceTop.Take(4))
+                    {
+                        var price = string.Format("{0:#,0}", item.Price);
+                        var pricePro = string.Format("{0:#,0}", item.PromotionPrice);
+                        <div class="mt-product4 mt-paddingbottom20">
+                            <div class="img">
+                                <a href="/san-pham-@item.Alias-@item.ID"><img alt="image description" src="@item.Image"></a>
+                            </div>
+                            <div class="text">
+                                <div class="frame">
+                                    <strong><a href="/san-pham-@item.Alias-@item.ID">@item.Name</a></strong>
+                                </div>
+                                @if (item.ActivePromotion == true)
+                                {
+                                    <div >
+                                        <del id="totol" class="off">@price VNĐ</del>
+                                        <span id="totolPro" class="price">@pricePro VNĐ</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="price">@price VNĐ</span>
+                                }
+                      
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 mt-paddingbottomsm wow fadeInLeft" data-wow-delay="0.4s">
+                    <h3 class="heading">Giá thấp nhất</h3>
+                    @foreach (var item in Model.ProductPriceBot.Take(4))
+                    {
+                        var price = string.Format("{0:#,0}", item.Price);
+                        var pricePro = string.Format("{0:#,0}", item.PromotionPrice);
+                        <div class="mt-product4 mt-paddingbottom20">
+                            <div class="img">
+                                <a href="/san-pham-@item.Alias-@item.ID"><img alt="image description" src="@item.Image"></a>
+                            </div>
+                            <div class="text">
+                                <div class="frame">
+                                    <strong><a href="/san-pham-@item.Alias-@item.ID">@item.Name</a></strong>
+                                </div>
+                                @if (item.ActivePromotion == true)
+                                {
+                                    <div>
+                                        <del id="totol" class="off">@price VNĐ</del>
+                                        <span id="totolPro" class="price">@pricePro VNĐ</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="price">@price VNĐ</span>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 mt-paddingbottomxs wow fadeInRight" data-wow-delay="0.4s">
+                    <h3 class="heading">Mới nhất</h3>
+                    @foreach (var item in Model.ProductNews.Take(4))
+                    {
+                        var price = string.Format("{0:#,0}", item.Price);
+                        var pricePro = string.Format("{0:#,0}", item.PromotionPrice);
+                        <div class="mt-product4 mt-paddingbottom20">
+                            <div class="img">
+                                <a href="/san-pham-@item.Alias-@item.ID"><img alt="image description" src="@item.Image"></a>
+                            </div>
+                            <div class="text">
+                                <div class="frame">
+                                    <strong><a href="/san-pham-@item.Alias-@item.ID">@item.Name</a></strong>
+                                </div>
+                                @if (item.ActivePromotion == true)
+                                {
+                                    <div>
+                                        <del id="totol" class="off">@price VNĐ</del>
+                                        <span id="totolPro" class="price">@pricePro VNĐ</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="price">@price VNĐ</span>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-3 wow fadeInRight" data-wow-delay="0.4s">
+                    <h3 class="heading">Nổi bật</h3>
+                    @foreach (var item in Model.ProductHots.Take(4))
+                    {
+                        var price = string.Format("{0:#,0}", item.Price);
+                        var pricePro = string.Format("{0:#,0}", item.PromotionPrice);
+                        <div class="mt-product4 mt-paddingbottom20">
+                            <div class="img">
+                                <a href="/san-pham-@item.Alias-@item.ID"><img alt="image description" src="@item.Image"></a>
+                            </div>
+                            <div class="text">
+                                <div class="frame">
+                                    <strong><a href="/san-pham-@item.Alias-@item.ID">@item.Name</a></strong>
+                                </div>
+                                @if (item.ActivePromotion == true)
+                                {
+                                    <div>
+                                        <del  class="off">@price VNĐ</del>
+                                        <span  class="price">@pricePro VNĐ</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <span class="price">@price VNĐ</span>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div><!-- mt bestseller end here -->
+</main>

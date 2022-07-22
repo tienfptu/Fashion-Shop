@@ -1,0 +1,28 @@
+﻿@model Fashion.Models.Size
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<section class="content">
+    <div class="box box-warning" style="margin-bottom:0px">
+        <div class="box-header with-border">
+            <h3 class="box-title">Cập nhật size</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            @using (Html.BeginForm("Update", "SizeAdmin", FormMethod.Post))
+            {
+                <div class="form-group">
+                    <label>Cỡ của sản phẩm:</label>
+                    @Html.TextBoxFor(model => model.Name, htmlAttributes: new { @class = "form-control", @required = "true", @placeholder = "Nhập size" })
+
+                </div>
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Cập nhật</button>
+                    <a href="/Admin/SizeAdmin/List" class="btn btn-default">Quay lại</a>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+

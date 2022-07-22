@@ -1,0 +1,68 @@
+﻿@model Fashion.Models.Customer
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main id="mt-main">
+    <!-- Mt Contact Banner of the Page -->
+    <section class="mt-contact-banner style4" style="background-image: url(/Assets/images/img43.jpg);">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <h1>HAVE A GOOD DAY!</h1>
+                    <!-- Breadcrumbs of the Page -->
+                    <nav class="breadcrumbs">
+                        <ul class="list-unstyled">
+                            <li><a href="/">Trang chủ<i class="fa fa-angle-right"></i></a></li>
+                            <li>Thông tin khách hàng</li>
+                        </ul>
+                    </nav><!-- Breadcrumbs of the Page end -->
+                </div>
+            </div>
+        </div>
+    </section><!-- Mt Contact Banner of the Page end -->
+    <div class="mt-padding-info">
+        <h2 style="text-align: center;margin-bottom:40px">THÔNG TIN KHÁCH HÀNG</h2>
+        <!-- Bill Detail of the Page -->
+        <form action="/customer/update" class="form-group">
+            <fieldset>
+                <div class="form-group">
+                    <label style="margin-left:15px">Tên tài khoản</label>
+                    <input type="text" name="Username" value="@Model.Username" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <label style="margin-left:15px">Email</label>
+                    <input type="email" name="Email" value="@Model.Email" class="form-control" readonly>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="Id" value="@Model.Id" style="display:none">
+                    <label style="margin-left:15px">Họ và tên</label>
+                    <input type="text" class="form-control" name="Name" value="@Model.Name">
+                </div>
+                <div class="form-group">
+                    <label style="margin-left:15px">Địa chỉ</label>
+                    <input type="text" name="Address" value="@Model.Address" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-left:15px">Số điện thoại</label>
+                    <input type="text" name="Phone" value="@Model.Phone" class="form-control">
+                </div>
+
+                <div class="form-group">
+                    <label style="margin-left:15px">Mật khẩu</label>
+                    <input type="password" name="Password" value="@Model.Password" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label style="margin-left:15px">Nhập lại mật khẩu</label>
+                    <input type="password" name="Repass" value="@Model.Password" class="form-control">
+                </div>
+                <div style="text-align: center;">
+                    <button type="submit" class="btn-type3">CẬP NHẬT THÔNG TIN</button>
+                </div>
+            </fieldset>
+        </form>
+        <!-- Bill Detail of the Page end -->
+    </div>
+</main>
